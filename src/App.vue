@@ -1,12 +1,14 @@
-
-<!--하나의 엘리멘트로 감싸줘야 코드가 작동하였음..-->
 <template>
-  <div class="name">
+<!-- v-bind: => : 동일 
+      v-on:  => @ 동일
+-->
+  <div :class="nameClass">
     {{ name }}
   </div> 
+  <input :type="type" :value="name">
   <button 
     class="btn btn-primary"
-    v-on:click="updateName"
+    @click="updateName"
   >
     Click
   </button> 
@@ -19,16 +21,21 @@ export default {
   
   setup() {
    
-    const name = ref({ id:1 }); 
+    const name = ref('무럭나무'); 
+    const type = ref('number');
+    const nameClass = ref('');
 
     const updateName = () => {
-      name.value.id = 2;
-      console.log(name);
+      name.value = '무럭무럭나무';
+      type.value = 'text';
+      nameClass.value = 'name';
     }
 
     return {
        name,
-       updateName
+       type,
+       updateName,
+       nameClass
     };
   }
 
