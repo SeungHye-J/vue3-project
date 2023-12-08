@@ -1,14 +1,12 @@
 <template>
-<!-- v-bind: => : 동일 
-      v-on:  => @ 동일
--->
-  <div :class="nameClass">
-    {{ name }}
-  </div> 
-  <input :type="type" :value="name">
+  <input 
+    type="text" 
+    :value="name"
+    @input="updateName"
+  >
   <button 
     class="btn btn-primary"
-    @click="updateName"
+    @click="onSubmit"
   >
     Click
   </button> 
@@ -22,20 +20,21 @@ export default {
   setup() {
    
     const name = ref('무럭나무'); 
-    const type = ref('number');
-    const nameClass = ref('');
 
-    const updateName = () => {
-      name.value = '무럭무럭나무';
-      type.value = 'text';
-      nameClass.value = 'name';
+    const updateName = (e) => { //e -> 이벤트객체
+     console.log(e.target.value);
+     name.value = e.target.value;
+     console.log("name = > "+ name.value);
+    }
+
+    const onSubmit = () => {
+     console.log(name.value);
     }
 
     return {
        name,
-       type,
-       updateName,
-       nameClass
+       onSubmit,
+       updateName
     };
   }
 
