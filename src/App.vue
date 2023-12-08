@@ -1,8 +1,7 @@
 <template>
   <input 
     type="text" 
-    :value="name"
-    @input="updateName"
+    v-model="name"
   >
   <button 
     class="btn btn-primary"
@@ -19,13 +18,7 @@ export default {
   
   setup() {
    
-    const name = ref('무럭나무'); 
-
-    const updateName = (e) => { //e -> 이벤트객체
-     console.log(e.target.value);
-     name.value = e.target.value;
-     console.log("name = > "+ name.value);
-    }
+    const name = ref('무럭나무');
 
     const onSubmit = () => {
      console.log(name.value);
@@ -33,8 +26,7 @@ export default {
 
     return {
        name,
-       onSubmit,
-       updateName
+       onSubmit
     };
   }
 
