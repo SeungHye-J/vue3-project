@@ -39,7 +39,7 @@
           >
           <label  
               class="form-check-label"
-              :style="todo.completed ? todoStyle : {}" 
+              :class ="{ todo: todo.completed }"
           >
             {{ todo.subject }}
           </label>
@@ -103,7 +103,8 @@ export default {
 </script>
 
 <style>
- .name {
-  color : red;
+ .todo {
+  color : gray;
+  text-decoration: line-through;
  }
 </style>
