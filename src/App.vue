@@ -7,7 +7,7 @@
       추가된 Todo가 없습니다.
     </div>
     <!--자식으로 값(todos) 보내주기-->
-    <TodoList :todos="todos" />
+    <TodoList :todos="todos" @toggle-todo="toggleTodo" />
     
     
   </div>
@@ -33,6 +33,12 @@ export default {
      
     }
 
+    const toggleTodo = (index) => {
+      console.log(todos.value[index])
+      todos.value[index].completed = !todos.value[index].completed;
+      console.log(+todos.value[index])
+    }
+
     const deleteTodo = (index) => {
       todos.value.splice(index,1);
     }
@@ -41,6 +47,7 @@ export default {
        todos,
        addTodo,
        deleteTodo,
+       toggleTodo,
     };
   }
 
