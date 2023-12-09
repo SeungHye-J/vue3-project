@@ -1,11 +1,4 @@
 <template>
-  <!-- 
-    <div v-if="toggle">true</div>
-    <div v-else>false</div>
-    <div v-show="toggle">true</div>
-    <div v-show="!toggle">false</div> 
-  -->
-  <button @click="onToggle">Toggle</button>
   <div class="container">
     <h1>To-Do List</h1>
     <form @submit.prevent="onSubmit">
@@ -38,7 +31,19 @@
       class="card mt-2"
     >
       <div class="card-body p-2">
-        {{ todo.subject }}
+        <div class="form-check">
+          <input 
+             class="form-check-input" 
+             type="checkbox"
+             v-model="todo.completed"
+          >
+          <label  
+              class="form-check-label" 
+          >
+            {{ todo.subject }}
+          </label>
+        </div>
+       
       </div>
     </div>
     
@@ -54,10 +59,7 @@ export default {
    
     const toggle = ref(false);
     const todo = ref('');
-    const todos = ref([
-      {id: 1 , subject: '휴대폰 사기'},
-      {id: 2 , subject: '장보기'}
-    ]);
+    const todos = ref([]);
 
     const hasError = ref(false);
 
@@ -69,9 +71,11 @@ export default {
       }else{
         todos.value.push({
           id: Date.now(),
-          subject: todo.value
+          subject: todo.value,
+          completed: true,
         });
         hasError.value = false;
+        todo.value='';
       }
      
     }
