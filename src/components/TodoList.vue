@@ -40,15 +40,15 @@ export default {
             required: true
         }
     },
-
-    setup(props,context) {
+    emits: ['toggle-todo','delete-todo'], //emit명 배열에 담아서 보내주면 경고사라짐
+    setup(props,{emit}) { //context - > {emit}
 
         const toggleTodo = (index) => {
-            context.emit('toggle-todo' , index);
+            emit('toggle-todo' , index);
         }
 
         const deleteTodo = (index) => {
-            context.emit('delete-todo',index);
+            emit('delete-todo',index);
         }
 
         return {
