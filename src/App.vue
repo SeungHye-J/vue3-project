@@ -1,12 +1,11 @@
 <template>
   <div class="container">
-    <h2>To-Do List</h2>
+    <h1>To-Do List</h1>
     <form 
       @submit.prevent="onSubmit"  
       class ="d-flex"
     >
-
-      <div class="flex-grow-1 mr-2">
+      <div class="flex-grow-1 m-2">
         <input 
           class= "form-control"
           type="text" 
@@ -15,7 +14,7 @@
         >
       </div>
 
-      <div>
+      <div class="m-2">
         <button 
           class="btn btn-primary"
           type="submit"
@@ -24,7 +23,16 @@
         </button> 
       </div>
     </form>
-    {{ todos }}
+    <div class="card mt-2">
+      <div class="card-body p-2">
+        {{ todos[0].subject }}
+      </div>
+    </div>
+    <div class="card mt-2">
+      <div class="card-body p-2">
+        {{ todos[1].subject }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,9 +44,12 @@ export default {
   setup() {
    
     const todo = ref('');
-    const todos = ref([]);
+    const todos = ref([
+      {id: 1 , subject: '휴대폰 사기'},
+      {id: 2 , subject: '장보기'}
+    ]);
 
-    const onSubmit = (e) => {
+    const onSubmit = () => {
    //   e.preventDefault();//리로딩방지
 
      todos.value.push({
