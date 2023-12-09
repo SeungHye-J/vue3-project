@@ -1,14 +1,31 @@
 <template>
-  <input 
-    type="text" 
-    v-model="name"
-  >
-  <button 
-    class="btn btn-primary"
-    @click="onSubmit"
-  >
-    Click
-  </button> 
+  <div class="container">
+    <h2>To-Do List</h2>
+    <form 
+      @submit.prevent="onSubmit"  
+      class ="d-flex"
+    >
+
+      <div class="flex-grow-1 mr-2">
+        <input 
+          class= "form-control"
+          type="text" 
+          v-model="todo"
+          placeholder="Type new to-do"
+        >
+      </div>
+
+      <div>
+        <button 
+          class="btn btn-primary"
+          type="submit"
+        >
+          Add
+        </button> 
+      </div>
+    </form>
+    {{ todos }}
+  </div>
 </template>
 
 <script>
@@ -18,14 +35,21 @@ export default {
   
   setup() {
    
-    const name = ref('무럭나무');
+    const todo = ref('');
+    const todos = ref([]);
 
-    const onSubmit = () => {
-     console.log(name.value);
+    const onSubmit = (e) => {
+   //   e.preventDefault();//리로딩방지
+
+     todos.value.push({
+      id: Date.now(),
+      subject: todo.value
+     });
     }
 
     return {
-       name,
+       todo,
+       todos,
        onSubmit
     };
   }
