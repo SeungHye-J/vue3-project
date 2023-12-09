@@ -47,8 +47,13 @@ export default {
             context.emit('toggle-todo' , index);
         }
 
+        const deleteTodo = (index) => {
+            context.emit('delete-todo',index);
+        }
+
         return {
-            toggleTodo
+            toggleTodo,
+            deleteTodo
         }
 
     }
