@@ -25,7 +25,36 @@
 </template>
 
 <script>
- export default {};
+    import { ref } from 'vue';
+    export default {
+
+        setup(props, context) {
+            const todo = ref('');
+            const hasError = ref(false);
+            
+            const onSubmit = () => {
+  
+                if(todo.value == ''){
+                    hasError.value = true;
+                }else{
+                    context.emit('add-todo' , {
+                        id: Date.now(),
+                        subject: todo.value,
+                        completed: false,
+                    }); // context 자식에서 부모로 보낼 때 필요
+                    hasError.value = false;
+                    todo.value='';
+                }
+                
+            }
+
+            return {
+                todo,
+                hasError,
+                onSubmit,
+            }
+        }
+    };
 </script>
 
 <style>
