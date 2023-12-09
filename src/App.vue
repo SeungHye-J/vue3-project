@@ -38,7 +38,8 @@
              v-model="todo.completed"
           >
           <label  
-              class="form-check-label" 
+              class="form-check-label"
+              :style="todo.completed ? todoStyle : {}" 
           >
             {{ todo.subject }}
           </label>
@@ -60,8 +61,11 @@ export default {
     const toggle = ref(false);
     const todo = ref('');
     const todos = ref([]);
-
     const hasError = ref(false);
+    const todoStyle = {
+      textDecoration: 'line-through',
+      color: 'gray'
+    };
 
     const onSubmit = () => {
    //   e.preventDefault();//리로딩방지
@@ -72,7 +76,7 @@ export default {
         todos.value.push({
           id: Date.now(),
           subject: todo.value,
-          completed: true,
+          completed: false,
         });
         hasError.value = false;
         todo.value='';
@@ -91,6 +95,7 @@ export default {
        toggle,
        onToggle,
        hasError,
+       todoStyle,
     };
   }
 
