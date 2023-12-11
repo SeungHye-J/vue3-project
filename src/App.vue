@@ -9,7 +9,7 @@
     >
     <hr/>
     <TodoSimpleForm @add-todo="addTodo"/>
-    <div>{{ error }}</div>
+    <div style="color:red">{{ error }}</div>
     <div v-if="!filteredTodos.length">
       There is nothing to display
     </div>
@@ -38,6 +38,18 @@ export default {
    
     const todos = ref([]);
     const error = ref('');
+
+    const getTodos = async() => {
+      try{
+        const res = await axios.get('http://localhost:3000/todos');//모든 todos데이터 호출
+        todos.value = res.data;
+      }catch(err){
+        console.log(err);
+      }
+      
+    };
+
+    getTodos();
 
     const addTodo = async (todo) => {
       error.value = '';
