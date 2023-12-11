@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+    <h4>count: {{ count }}</h4>
+    <!--computed는 캐시되어지기 때문에 콘솔에 한번만 찍힘-->
+    <h4>double count computed: {{ doubleCountComputed }}</h4>
+    <h4>double count computed: {{ doubleCountComputed }}</h4>
+     <!--method는 갯수만큼 함수를 돌리기때문에 2번 콘솔에 찍힘-->
+    <h4>double count method: {{ doubleCountMethod() }}</h4>
+    <h4>double count method: {{ doubleCountMethod() }}</h4>
+    <button @click="count++">Add One</button>
     <h1>To-Do List</h1>
     <TodoSimpleForm @add-todo="addTodo"/>
     
@@ -18,7 +26,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 
@@ -47,11 +55,25 @@ export default {
       todos.value.splice(index,1);
     }
 
+    const count = ref(1);
+    const doubleCountComputed = computed(() => {
+      console.log('computed');
+      return count.value * 2;
+    });
+
+    const doubleCountMethod = () => {
+       console.log('method');
+      return count.value * 2;
+    };
+
     return {
        todos,
        addTodo,
        deleteTodo,
        toggleTodo,
+       count,
+       doubleCountComputed,
+       doubleCountMethod,
     };
   }
 
