@@ -1,22 +1,20 @@
 <template>
   <div class="container">
-    <h4>count: {{ count }}</h4>
-    <!--computed는 캐시되어지기 때문에 콘솔에 한번만 찍힘-->
-    <h4>double count computed: {{ doubleCountComputed }}</h4>
-    <h4>double count computed: {{ doubleCountComputed }}</h4>
-     <!--method는 갯수만큼 함수를 돌리기때문에 2번 콘솔에 찍힘-->
-    <h4>double count method: {{ doubleCountMethod() }}</h4>
-    <h4>double count method: {{ doubleCountMethod() }}</h4>
-    <button @click="count++">Add One</button>
     <h1>To-Do List</h1>
+    <input 
+      class= "form-control"
+      type="text" 
+      v-model="searchText"
+      placeholder="Serch"
+    >
+    <hr/>
     <TodoSimpleForm @add-todo="addTodo"/>
     
-    <div v-if="!todos.length">
-      추가된 Todo가 없습니다.
+    <div v-if="!filteredTodos.length">
+      There is nothing to display
     </div>
-    <!--자식으로 값(todos) 보내주기-->
     <TodoList 
-      :todos="todos" 
+      :todos="filteredTodos" 
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -55,25 +53,25 @@ export default {
       todos.value.splice(index,1);
     }
 
-    const count = ref(1);
-    const doubleCountComputed = computed(() => {
-      console.log('computed');
-      return count.value * 2;
+    const searchText = ref('');
+    const filteredTodos = computed(()=>{
+      //검색되어진게 있을 경우
+      if(searchText.value){
+        return todos.value.filter(todo=>{
+          return todo.subject.includes(searchText.value);
+        });
+      }
+      //검색되어진게 없을 경우 모든todos 리턴
+      return todos.value;
     });
-
-    const doubleCountMethod = () => {
-       console.log('method');
-      return count.value * 2;
-    };
 
     return {
        todos,
        addTodo,
        deleteTodo,
        toggleTodo,
-       count,
-       doubleCountComputed,
-       doubleCountMethod,
+       searchText,
+       filteredTodos,
     };
   }
 
