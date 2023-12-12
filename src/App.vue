@@ -10,11 +10,11 @@
     <hr/>
     <TodoSimpleForm @add-todo="addTodo"/>
     <div style="color:red">{{ error }}</div>
-    <div v-if="!filteredTodos.length">
+    <div v-if="!todos.length">
       There is nothing to display
     </div>
     <TodoList 
-      :todos="filteredTodos" 
+      :todos="todos" 
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, reactive } from 'vue';
+import { ref, computed, watch } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 import axios from 'axios';
@@ -59,23 +59,7 @@ export default {
     const numberOfTodos = ref(0);
     let limit =5;
     const currentPage = ref(1);
-
-    const a = reactive({
-      b : 1,
-      c : 3
-    });
-
-    //reactive로 watch사용하기
-    watch(()=>[a.b, a.c] , (current , prev) => {
-      console.log(current,prev)
-    });
-    
-    a.b = 2;
-
-   //ref로 watch 사용하기
-    watch(currentPage, (currentPage , prev) => {
-      console.log(currentPage,prev)
-    })
+    const searchText = ref('');
 
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value/limit); // 올림으로 계산
@@ -87,7 +71,7 @@ export default {
       try{
         //모든 todos데이터 호출
         const res = await axios.get(
-          `http://localhost:3000/todos?_page=${page}&_limit=${limit}`
+          `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
           );
         numberOfTodos.value = res.headers['x-total-count'];
         todos.value = res.data;
@@ -148,17 +132,21 @@ export default {
     };
 
 
-    const searchText = ref('');
-    const filteredTodos = computed(()=>{
-      //검색되어진게 있을 경우
-      if(searchText.value){
-        return todos.value.filter(todo=>{
-          return todo.subject.includes(searchText.value);
-        });
-      }
-      //검색되어진게 없을 경우 모든todos 리턴
-      return todos.value;
+    // 검색 변화 생길때마다 모든todos에서 검색하여 불러오기 위해 watch속성사용
+    watch(searchText, () => {
+      getTodos(1); // 항상 1페이지로 보내주기
     });
+
+    // const filteredTodos = computed(()=>{
+    //   //검색되어진게 있을 경우
+    //   if(searchText.value){
+    //     return todos.value.filter(todo=>{
+    //       return todo.subject.includes(searchText.value);
+    //     });
+    //   }
+    //   //검색되어진게 없을 경우 모든todos 리턴
+    //   return todos.value;
+    // });
 
     return {
        todos,
@@ -166,7 +154,7 @@ export default {
        deleteTodo,
        toggleTodo,
        searchText,
-       filteredTodos,
+      //  filteredTodos,
        error,
        numberOfPages,
        currentPage,
