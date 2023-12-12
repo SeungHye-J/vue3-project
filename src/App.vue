@@ -32,7 +32,7 @@
           :class = "currentPage === page ? 'active' : ''"
         >
           <a style="cursor: pointer" class="page-link" @click="getTodos(page)">{{page}}</a>
-        </li>
+        </li> 
         <li v-if="numberOfPages !== currentPage" class="page-item">
           <a style="cursor: pointer" class="page-link" @click="getTodos(currentPage + 1)">Next</a>
         </li>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed ,watchEffect, reactive } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 import axios from 'axios';
@@ -60,9 +60,25 @@ export default {
     const limit =5;
     const currentPage = ref(1);
 
+    // watchEffect(() => {
+    //   console.log(currentPage.value);
+    //   console.log(numberOfTodos.value);
+    // });
+    
+
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value/limit); // 올림으로 계산
     });
+    
+    // const a = reactive({
+    //   b: 1
+    // });
+
+    // watchEffect(() => {
+    //   console.log(a.b);
+    
+    // });
+    // a.b=4;
 
     const getTodos = async(page = currentPage.value ) => {
       currentPage.value = page;
