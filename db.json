@@ -1,41 +1,6 @@
 {
   "todos": [
     {
-      "subject": "adf",
-      "completed": true,
-      "id": 3
-    },
-    {
-      "subject": "hello",
-      "completed": false,
-      "id": 6
-    },
-    {
-      "subject": "buy milk",
-      "completed": false,
-      "id": 7
-    },
-    {
-      "subject": "1",
-      "completed": false,
-      "id": 8
-    },
-    {
-      "subject": "2",
-      "completed": false,
-      "id": 9
-    },
-    {
-      "subject": "3",
-      "completed": false,
-      "id": 10
-    },
-    {
-      "subject": "4",
-      "completed": false,
-      "id": 11
-    },
-    {
       "subject": "5",
       "completed": false,
       "id": 12
@@ -94,6 +59,26 @@
       "subject": "17",
       "completed": false,
       "id": 23
+    },
+    {
+      "subject": "new todo",
+      "completed": false,
+      "id": 24
+    },
+    {
+      "subject": "newtodo2",
+      "completed": false,
+      "id": 25
+    },
+    {
+      "subject": "asdad",
+      "completed": false,
+      "id": 26
+    },
+    {
+      "subject": "new",
+      "completed": false,
+      "id": 27
     }
   ]
 }
