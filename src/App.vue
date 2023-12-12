@@ -1,13 +1,17 @@
 <template>
-<router-view/>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">무럭무럭 나무</a>
+    
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Todos <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </nav>
+  <router-view/>
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue';
-import TodoSimpleForm from './components/TodoSimpleForm.vue';
-import TodoList from './components/TodoList.vue'
-import axios from 'axios';
-
 export default {
 }
 </script>
