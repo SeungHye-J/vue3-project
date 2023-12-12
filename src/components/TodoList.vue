@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { watchEffect } from 'vue';
 export default {
     //App.vue에서 보낸 todos(이름):보내는값의 이름 적어주어 사용하기
     props: {
@@ -43,10 +42,6 @@ export default {
     },
     emits: ['toggle-todo','delete-todo'], //emit명 배열에 담아서 보내주면 경고사라짐
     setup(props,{emit}) { //context - > {emit}
-
-        watchEffect(() => {
-            console.log( props.todos.length );
-        });
 
         const toggleTodo = (index) => {
             emit('toggle-todo' , index);

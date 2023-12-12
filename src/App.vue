@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 import axios from 'axios';
@@ -57,15 +57,16 @@ export default {
     const todos = ref([]);
     const error = ref('');
     const numberOfTodos = ref(0);
-    const limit =5;
+    let limit =5;
     const currentPage = ref(1);
 
-    // watchEffect(() => {
-    //   console.log(currentPage.value);
-    //   console.log(numberOfTodos.value);
-    // });
     
-
+    watchEffect(() => {
+      console.log(limit);
+    });
+    
+    limit =3;
+    
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value/limit); // 올림으로 계산
     });
