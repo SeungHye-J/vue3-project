@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, reactive } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 import axios from 'axios';
@@ -60,7 +60,19 @@ export default {
     let limit =5;
     const currentPage = ref(1);
 
-  //currentPage가 변경되면 움직임
+    const a = reactive({
+      b : 1,
+      c : 3
+    });
+
+    //reactive로 watch사용하기
+    watch(()=>[a.b, a.c] , (current , prev) => {
+      console.log(current,prev)
+    });
+    
+    a.b = 2;
+
+   //ref로 watch 사용하기
     watch(currentPage, (currentPage , prev) => {
       console.log(currentPage,prev)
     })
