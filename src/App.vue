@@ -6,6 +6,7 @@
       type="text" 
       v-model="searchText"
       placeholder="Serch"
+      @keyup.enter="searchTodo"
     >
     <hr/>
     <TodoSimpleForm @add-todo="addTodo"/>
@@ -133,22 +134,22 @@ export default {
       
     };
 
+    let timeout = null;
+    const searchTodo = () => {
+      clearTimeout(timeout);
+      getTodos(1); 
+    };
 
     // 검색 변화 생길때마다 모든todos에서 검색하여 불러오기 위해 watch속성사용
     watch(searchText, () => {
-      getTodos(1); // 항상 1페이지로 보내주기
+      clearTimeout(timeout); //기존에 timeout이 걸려있던 것을 취소해준 후
+      //2000 - >2초 후에 코드 실행/ 검색창에 한글자씩 칠 때마다 돌기 때문에timeout걸어줬음
+      timeout = setTimeout(() => {
+        getTodos(1); // 항상 1페이지로 보내주기
+      }, 2000);
+     
     });
 
-    // const filteredTodos = computed(()=>{
-    //   //검색되어진게 있을 경우
-    //   if(searchText.value){
-    //     return todos.value.filter(todo=>{
-    //       return todo.subject.includes(searchText.value);
-    //     });
-    //   }
-    //   //검색되어진게 없을 경우 모든todos 리턴
-    //   return todos.value;
-    // });
 
     return {
        todos,
@@ -161,6 +162,7 @@ export default {
        numberOfPages,
        currentPage,
        getTodos,
+       searchTodo,
     };
   }
 
