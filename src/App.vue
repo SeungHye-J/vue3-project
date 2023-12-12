@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, computed ,watchEffect, reactive } from 'vue';
+import { ref, computed } from 'vue';
 import TodoSimpleForm from './components/TodoSimpleForm.vue';
 import TodoList from './components/TodoList.vue'
 import axios from 'axios';
