@@ -54,12 +54,13 @@
         :message="toastMessage"
         :type="toastAlertType"
     />
+    <div id="tree">무럭무럭나무</div>
 </template>
 
 <script>
 import { useRoute ,useRouter } from 'vue-router';
 import axios from 'axios';
-import { ref,computed } from 'vue'
+import { ref,computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -68,6 +69,28 @@ export default {
         Toast
     },
     setup() {
+        onBeforeMount(() => {
+            console.log(document.querySelector("#tree"));
+
+        });
+        onMounted(()=> {
+            console.log(document.querySelector("#tree"));
+        });
+
+        console.log('hello');
+        onBeforeUpdate(()=> {
+            console.log("onBeforeUpdate");
+        });
+        onUpdated(()=> {
+            console.log("onUpdated");
+        });
+        onBeforeUnmount(()=> {
+            console.log("onBeforeUnmount");
+        });
+        onUnmounted(()=> {
+            console.log("onUnmounted");
+        });
+       
         const route = useRoute();
         const router = useRouter();
         const todo = ref(null);
@@ -151,7 +174,7 @@ export default {
         }
     }
 }
-</script>
+</script> 
 
 <style>
 
