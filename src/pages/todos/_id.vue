@@ -54,13 +54,12 @@
         :message="toastMessage"
         :type="toastAlertType"
     />
-    <div id="tree">무럭무럭나무</div>
 </template>
 
 <script>
 import { useRoute ,useRouter } from 'vue-router';
 import axios from 'axios';
-import { ref,computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
+import { ref,computed, onUnmounted } from 'vue'
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -69,28 +68,6 @@ export default {
         Toast
     },
     setup() {
-        onBeforeMount(() => {
-            console.log(document.querySelector("#tree"));
-
-        });
-        onMounted(()=> {
-            console.log(document.querySelector("#tree"));
-        });
-
-        console.log('hello');
-        onBeforeUpdate(()=> {
-            console.log("onBeforeUpdate");
-        });
-        onUpdated(()=> {
-            console.log("onUpdated");
-        });
-        onBeforeUnmount(()=> {
-            console.log("onBeforeUnmount");
-        });
-        onUnmounted(()=> {
-            console.log("onUnmounted");
-        });
-       
         const route = useRoute();
         const router = useRouter();
         const todo = ref(null);
@@ -99,7 +76,13 @@ export default {
         const showToast = ref(false);
         const toastMessage = ref('');
         const toastAlertType = ref('');
+        const timeout = ref(null);
         const todoId = route.params.id;
+
+        onUnmounted(()=> {
+           clearTimeout(timeout.value);
+           //페이지나가면 타임아웃 메모리 정리해주기
+        });
 
         const getTodo = async () => {
             try{
@@ -137,7 +120,7 @@ export default {
             toastMessage.value = message;
             toastAlertType.value = type;
             showToast.value = true;
-            setTimeout(() => {
+            timeout.value = setTimeout(() => { //메모리에 계속 담겨있기 때문에 페이지 나가면 없애줘야함->onUnmount
                 toastMessage.value = '';
                 toastAlertType.value = '';
                 showToast.value = false;
