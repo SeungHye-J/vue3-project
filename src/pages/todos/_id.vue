@@ -59,9 +59,10 @@
 <script>
 import { useRoute ,useRouter } from 'vue-router';
 import axios from 'axios';
-import { ref,computed, onUnmounted } from 'vue'
+import { ref,computed } from 'vue'
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
+import { useToast } from '@/composables/toast';
 
 export default {
     components: {
@@ -73,16 +74,14 @@ export default {
         const todo = ref(null);
         const originalTodo = ref(null);
         const loading = ref(true);
-        const showToast = ref(false);
-        const toastMessage = ref('');
-        const toastAlertType = ref('');
-        const timeout = ref(null);
         const todoId = route.params.id;
 
-        onUnmounted(()=> {
-           clearTimeout(timeout.value);
-           //페이지나가면 타임아웃 메모리 정리해주기
-        });
+        const {
+            showToast,
+            toastMessage,
+            toastAlertType,
+            triggerToast
+        } = useToast();
 
         const getTodo = async () => {
             try{
@@ -115,17 +114,6 @@ export default {
         }
 
         getTodo();
-
-        const triggerToast = (message ,type= 'success') => {
-            toastMessage.value = message;
-            toastAlertType.value = type;
-            showToast.value = true;
-            timeout.value = setTimeout(() => { //메모리에 계속 담겨있기 때문에 페이지 나가면 없애줘야함->onUnmount
-                toastMessage.value = '';
-                toastAlertType.value = '';
-                showToast.value = false;
-            },3000)
-        };
 
         const onSave = async () => {
             try{
