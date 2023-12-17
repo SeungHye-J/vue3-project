@@ -48,7 +48,7 @@
           class="btn btn-primary"
           :disabled="!todoUpdated"
         >
-            Save
+            {{ editing ? 'Update' : 'Create' }}
         </button>
         <button 
             class="btn btn-outline-dark ml-2"
@@ -140,13 +140,29 @@ export default {
 
         const onSave = async () => {
             try{
-                const res = await axios.put(`http://localhost:3000/todos/${todoId}` , {
-                    subject : todo.value.subject,
-                    completed : todo.value.completed
-                });
+                 let res;
+                 const data = {
+                     subject : todo.value.subject,
+                     completed : todo.value.completed,
+                     body: todo.value.body
+                 }
+                 if(props.editing){ // 수정일때 put으로 보냄
+                     res = await axios.put(`http://localhost:3000/todos/${todoId}` 
+                     , data );
+                     originalTodo.value = {...res.data};//DB의 subject
 
-                originalTodo.value = {...res.data};
-                triggerToast('Successfully saved!');
+                 }else { // Create 일 경우 post 로 생성 RESTAPI에서 생성
+                     res = await axios.post(`http://localhost:3000/todos` 
+                     , data );
+                     todo.value.subject = '';
+                     todo.value.body = '';
+                 }
+
+               
+
+                
+                const message = 'Successfully ' + (props.editing ? 'Updated!' : 'Created!');
+                triggerToast(message);
 
             }catch(error){
                 console.log(error);
