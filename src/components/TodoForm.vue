@@ -17,7 +17,7 @@
                     >
                     <div
                        v-if="subjectError"
-                        style="color:red"
+                       class="text-red"
                     >
                         {{subjectError}}
                     </div>
@@ -199,6 +199,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped> /*scoped - 현재 컴포넌트에만 적용*/ 
+    .text-red {
+        color:red;
+    }
+</style>
+<style> /* 글로벌하게 적용 가능 */
 
 </style>
