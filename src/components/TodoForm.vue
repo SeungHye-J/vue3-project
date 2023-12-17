@@ -63,11 +63,13 @@
             Cancel
         </button>
     </form>
+    <transition name="fade">
     <Toast 
         v-if="showToast"
         :message="toastMessage"
         :type="toastAlertType"
     />
+    </transition>
 </template>
 
 <script>
@@ -202,6 +204,23 @@ export default {
 <style scoped> /*scoped - 현재 컴포넌트에만 적용*/ 
     .text-red {
         color:red;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active{
+        transition: all 0.5s ease; /*투명도 0.5간 점차 진해지면서 살며시*/
+    }
+
+    .fade-enter-from,
+    .fade-leave-to{
+        opacity: 0; /*시작상태 0 끝날때 0 */
+        transform: translateY(-30px); /* 30px 위에서 시작*/
+    }
+
+    .fade-enter-to,
+    .fade-leave-from{ /*0에서 시작후 1로됨 끝날때 1->0 */
+        opacity: 1;
+        transform: translateY(0px); /*제자리로 */
     }
 </style>
 <style> /* 글로벌하게 적용 가능 */
