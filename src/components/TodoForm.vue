@@ -8,7 +8,7 @@
     >
         <div class="row  mb-2">
             <div class="col-6">
-                <div calss="form-group">
+                <!-- <div calss="form-group">
                     <label>Subject</label>
                     <input 
                       v-model="todo.subject" 
@@ -21,7 +21,12 @@
                     >
                         {{subjectError}}
                     </div>
-                </div>
+                </div> -->
+                <Input 
+                    label="Subject"
+                    v-model:subject="todo.subject"
+                    :error="subjectError"
+                />
             </div>
             <div v-if="editing" class="col-6">
                  <div calss="form-group">
@@ -75,14 +80,16 @@
 <script>
 import { useRoute ,useRouter } from 'vue-router';
 import axios from 'axios';
-import { ref,computed } from 'vue'
+import { ref,computed, onUpdated } from 'vue'
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 import { useToast } from '@/composables/toast';
+import Input from '@/components/input.vue';
 
 export default {
     components: {
-        Toast
+        Toast,
+        Input
     },
     props:{
         editing:{
@@ -98,6 +105,9 @@ export default {
             subject: '',
             completed: false
         });
+        onUpdated(() => {
+            console.log(todo.value.subject);
+        })
         const subjectError = ref('');
         const originalTodo = ref(null);
         const loading = ref(false);
@@ -172,8 +182,6 @@ export default {
                      todo.value.body = '';
                  }
 
-               
-
                 
                 const message = 'Successfully ' + (props.editing ? 'Updated!' : 'Created!');
                 triggerToast(message);
@@ -202,10 +210,7 @@ export default {
 </script>
 
 <style scoped> /*scoped - 현재 컴포넌트에만 적용*/ 
-    .text-red {
-        color:red;
-    }
-
+   
     .fade-enter-active,
     .fade-leave-active{
         transition: all 0.5s ease; /*투명도 0.5간 점차 진해지면서 살며시*/
