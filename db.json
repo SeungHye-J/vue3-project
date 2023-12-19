@@ -32,7 +32,7 @@
     },
     {
       "subject": "11",
-      "completed": false,
+      "completed": true,
       "id": 18
     },
     {
@@ -60,12 +60,6 @@
       "completed": true,
       "body": "수정된 Todo입니다2",
       "id": 25
-    },
-    {
-      "subject": "buy milk",
-      "completed": false,
-      "body": "at supermarket",
-      "id": 26
     }
   ]
 }
