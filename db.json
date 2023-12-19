@@ -51,11 +51,6 @@
       "id": 21
     },
     {
-      "subject": "166 ",
-      "completed": false,
-      "id": 22
-    },
-    {
       "subject": "new todo",
       "completed": true,
       "id": 24
@@ -77,22 +72,6 @@
       "completed": false,
       "body": "!!!!!",
       "id": 27
-    },
-    {
-      "subject": "",
-      "completed": false,
-      "id": 28
-    },
-    {
-      "subject": "12",
-      "completed": false,
-      "id": 29
-    },
-    {
-      "subject": "a",
-      "completed": false,
-      "body": "123",
-      "id": 30
     }
   ]
 }
