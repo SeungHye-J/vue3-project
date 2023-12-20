@@ -79,7 +79,7 @@
 
 <script>
 import { useRoute ,useRouter } from 'vue-router';
-import axios from 'axios';
+import axios from '@/axios';
 import { ref,computed } from 'vue'
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
@@ -120,7 +120,7 @@ export default {
         const getTodo = async () => {
             loading.value=true;
             try{
-                const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
+                const res = await axios.get(`todos/${todoId}`);
                 
                 todo.value = {...res.data }; //새로운 객체주소로 만들어주기 그냥 res.data를 적어주면 originalTodo와 같은 주소값을 가지기때문
                 originalTodo.value =  {...res.data };
@@ -169,13 +169,11 @@ export default {
                      body: todo.value.body
                  }
                  if(props.editing){ // 수정일때 put으로 보냄
-                     res = await axios.put(`http://localhost:3000/todos/${todoId}` 
-                     , data );
+                     res = await axios.put(`todos/${todoId}`, data );
                      originalTodo.value = {...res.data};//DB의 subject
 
                  }else { // Create 일 경우 post 로 생성 RESTAPI에서 생성
-                     res = await axios.post(`http://localhost:3000/todos` 
-                     , data );
+                     res = await axios.post('todos', data );
                      todo.value.subject = '';
                      todo.value.body = '';
                  }
