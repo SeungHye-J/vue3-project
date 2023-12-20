@@ -51,7 +51,8 @@
 import { useRouter } from 'vue-router';
 import Modal from '@/components/DeleteModal.vue';
 import { ref } from 'vue';
-import List from '@/components/List.vue'
+import List from '@/components/List.vue';
+import { getCurrentInstance } from 'vue';
 export default {
   components:{
     Modal,
@@ -65,7 +66,8 @@ export default {
         }
     },
     emits: ['toggle-todo','delete-todo'], //emit명 배열에 담아서 보내주면 경고사라짐
-    setup(props,{emit}) { //context - > {emit}
+    setup() { //context - > {emit}
+        const { emit } = getCurrentInstance();
         const router = useRouter();
         const showModal = ref(false);
         const todoDeleteId = ref(null);
