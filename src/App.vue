@@ -39,8 +39,6 @@ export default {
             triggerToast
         } = useToast();
 
-      console.log(showToast.value)
-
         return {
            showToast,
            toastMessage,
