@@ -24,15 +24,16 @@ export default{
        }
    },
    actions: { //함수는 actiond에서
-        triggerToast({commit}, message , type= 'success') {
+        triggerToast( {commit}, payload ) {
+        //    message , type= 'success'
         //    commit('UPDATE_TOAST_MESSAGE', message)
         //    commit('UPDATE_TOAST_ALERT_TYPE', type)
         //    commit('UPDATE_TOAST_STATUS', true)
 
             commit('ADD_TOAST',{
                 id: Date.now(),
-                message,
-                type,
+                message:payload.message,
+                type:payload.type
             })
            setTimeout(() => { //메모리에 계속 담겨있기 때문에 페이지 나가면 없애줘야함->onUnmount
             //    commit('UPDATE_TOAST_MESSAGE', '')
