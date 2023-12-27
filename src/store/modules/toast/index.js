@@ -1,31 +1,45 @@
 export default{
    namespaced:true,
    state: {
-        toastMessage: '',
-        toastAlertType: '',
-        showToast: false,
+    toasts: [],
+        // toastMessage: '',
+        // toastAlertType: '',
+        // showToast: false,
    },
    mutations:{//state를 변경하기 위한 곳. 동기적
-       UPDATE_TOAST_MESSAGE (state, payload) {
-           state.toastMessage = payload;
+    //    UPDATE_TOAST_MESSAGE (state, payload) {
+    //        state.toastMessage = payload;
+    //    },
+    //    UPDATE_TOAST_ALERT_TYPE (state, payload) {
+    //        state.toastAlertType = payload;
+    //    },
+    //    UPDATE_TOAST_STATUS (state, payload) {
+    //        state.showToast = payload;
+    //    },
+       ADD_TOAST(state, payload) {
+            state.toasts.push(payload);
        },
-       UPDATE_TOAST_ALERT_TYPE (state, payload) {
-           state.toastAlertType = payload;
-       },
-       UPDATE_TOAST_STATUS (state, payload) {
-           state.showToast = payload;
+       REMOVE_TOAST(state) {
+            state.toasts.shift();
        }
    },
    actions: { //함수는 actiond에서
         triggerToast({commit}, message , type= 'success') {
-           commit('UPDATE_TOAST_MESSAGE', message)
-           commit('UPDATE_TOAST_ALERT_TYPE', type)
-           commit('UPDATE_TOAST_STATUS', true)
+        //    commit('UPDATE_TOAST_MESSAGE', message)
+        //    commit('UPDATE_TOAST_ALERT_TYPE', type)
+        //    commit('UPDATE_TOAST_STATUS', true)
+
+            commit('ADD_TOAST',{
+                id: Date.now(),
+                message,
+                type,
+            })
            setTimeout(() => { //메모리에 계속 담겨있기 때문에 페이지 나가면 없애줘야함->onUnmount
-               commit('UPDATE_TOAST_MESSAGE', '')
-               commit('UPDATE_TOAST_ALERT_TYPE', '')
-               commit('UPDATE_TOAST_STATUS', false)
-           },3000)
+            //    commit('UPDATE_TOAST_MESSAGE', '')
+            //    commit('UPDATE_TOAST_ALERT_TYPE', '')
+            //    commit('UPDATE_TOAST_STATUS', false)
+                commit('REMOVE_TOAST')
+           },10000)
 
        }
    },
